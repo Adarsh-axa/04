@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To My Dearest Momo 🌸</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #ffe6f2, #ffffff);
+      overflow: hidden;
+      color: #ff69b4;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    #blossoms {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hug-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: white;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .hug-button:hover {
+      background-color: #ff4da6;
+    }
+
+    #hug-message {
+      margin-top: 10px;
+      display: none;
+      font-size: 1.5rem;
+      color: #ff80a6;
+    }
+
+    .sidebar-buttons {
+      position: fixed;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar-buttons button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      color: white;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar-buttons button:hover {
+      background-color: #ff4da6;
+    }
+
+    #motivation-message {
+      display: none;
+      margin-top: 10px;
+      font-size: 1.25rem;
+      color: #ff80a6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To My Dearest Momo 🌸</h1>
+    <p>
+      Hey Mistu,  
+      I know that life sometimes feels heavy, and today might be one of those days. But I want you to pause for a moment and take a deep breath. Close your eyes and imagine the most beautiful cherry blossoms floating gently in the air, their fragrance wrapping you in a warm embrace. That’s how I want you to feel right now—wrapped in love, comfort, and peace.
+    </p>
+    <p>
+      You’re not alone in this journey, not for a single moment. I am here, always, through every step and stumble, through the brightest days and the darkest nights. You don’t have to face anything on your own. You are my sunshine, my moonlight, and my favorite part of every day.
+    </p>
+    <p>
+      So, as you sit here watching these gentle blossoms fall, know that each one carries my love, my care, and my endless support for you. You are magic, Momo, and you deserve to feel the love that surrounds you every single day.
+    </p>
+
+    <button class="hug-button" id="hug-button">My kitten wants a hug?</button>
+    <p id="hug-message">You've just received the warmest virtual hug! sweetie💖</p>
+  </div>
+
+  <div class="sidebar-buttons">
+    <button id="motivate-button">Get a Boost 🌟</button>
+    <p id="motivation-message"></p>
+  </div>
+
+  <canvas id="blossoms"></canvas>
+
+  <audio id="soothing-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const canvas = document.getElementById("blossoms");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const petals = [];
+    const petalCount = 150;
+    const colors = ["#ffcce7", "#ffb3d1", "#ff99bb", "#ff80a6", "#ff6699"];
+
+    class Petal {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height - canvas.height;
+        this.radius = Math.random() * 3 + 2;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speed = Math.random() * 1 + 0.5;
+        this.wind = Math.random() * 0.5 - 0.25;
+      }
+
+      update() {
+        this.y += this.speed;
+        this.x += this.wind;
+
+        if (this.y > canvas.height) {
+          this.y = -10;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      petals.forEach((petal) => {
+        petal.update();
+        petal.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Hug Button
+    document.getElementById("hug-button").addEventListener("click", () => {
+      const hugMessage = document.getElementById("hug-message");
+      hugMessage.style.display = "block";
+      setTimeout(() => {
+        hugMessage.style.display = "none";
+      }, 3000);
+
+      // Play music when the hug button is clicked
+      const audio = document.getElementById('soothing-music');
+      audio.play().catch(error => {
+        console.log('Audio autoplay was blocked:', error);
+      });
+    });
+
+    // Motivational Pop-ups
+    const motivationalQuotes = [
+      "You are stronger than you think. 🌟",
+      "Keep shining, Momo—you are a star! 🌠",
+      "Even on tough days, you are extraordinary. 💪",
+      "The world is brighter with you in it. 🌷",
+      "Take a deep breath; you’ve got this. 💖"
+    ];
+    document.getElementById("motivate-button").addEventListener("click", () => {
+      const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+      const message = document.getElementById("motivation-message");
+      message.textContent = randomQuote;
+      message.style.display = "block";
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 4000);
+    });
+  </script>
+</body>
+</html>
